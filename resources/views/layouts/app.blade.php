@@ -15,105 +15,41 @@
       font-family: "Segoe UI", Arial, sans-serif;
       background-color: #f5f9fb;
     }
-
-    /* Navbar */
     .navbar-custom {
       background: linear-gradient(90deg, #0d9fe6, #0b7cc1);
       height: 60px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       padding: 0 20px;
     }
-    .navbar-brand {
-      font-weight: bold;
-      color: #fff !important;
-      font-size: 18px;
-      letter-spacing: 0.5px;
-    }
-    .user-info {
-      color: #fff;
-      margin-right: 8px;
-      font-size: 14px;
-    }
-    .toggle-btn {
-      font-size: 22px;
-      color: #fff;
-      margin-left: 15px;
-      cursor: pointer;
-    }
-    .logout-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    .logout-btn:hover {
-      text-decoration: underline;
-    }
+    .navbar-brand { font-weight: bold; color: #fff !important; font-size: 18px; }
+    .user-info { color: #fff; margin-right: 8px; font-size: 14px; }
+    .toggle-btn { font-size: 22px; color: #fff; margin-left: 15px; cursor: pointer; }
+    .logout-btn { background: none; border: none; color: #fff; font-size: 15px; cursor: pointer; }
+    .logout-btn:hover { text-decoration: underline; }
 
-    /* Sidebar */
     .sidebar {
-      height: 100vh;
-      width: 220px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background-color: #2c3e50;
-      color: white;
-      padding-top: 70px;
-      transition: all 0.3s ease;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      height: 100vh; width: 220px; position: fixed; top: 0; left: 0;
+      background-color: #2c3e50; color: white; padding-top: 70px;
+      transition: all 0.3s ease; box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     }
     .sidebar a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 20px;
-      color: #ecf0f1;
-      text-decoration: none;
-      font-size: 15px;
-      transition: all 0.2s ease;
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px; color: #ecf0f1; text-decoration: none;
+      font-size: 15px; transition: all 0.2s ease;
     }
-    .sidebar a:hover {
-      background-color: #0d9fe6;
-      color: #fff;
-    }
-    .sidebar a.active {
-      background-color: #0b7cc1;
-      color: #fff;
-      font-weight: bold;
-    }
-    .sidebar.collapsed {
-      width: 70px;
-    }
-    .sidebar.collapsed .menu-text {
-      display: none;
-    }
+    .sidebar a:hover { background-color: #0d9fe6; color: #fff; }
+    .sidebar a.active { background-color: #0b7cc1; color: #fff; font-weight: bold; }
+    .sidebar.collapsed { width: 70px; }
+    .sidebar.collapsed .menu-text { display: none; }
 
-    /* Content */
-    .content {
-      margin-left: 220px;
-      padding: 80px 20px 20px 20px;
-      transition: all 0.3s ease;
-    }
-    .content.expanded {
-      margin-left: 70px;
-    }
+    .content { margin-left: 220px; padding: 80px 20px 20px 20px; transition: all 0.3s ease; }
+    .content.expanded { margin-left: 70px; }
 
-    /* Responsif */
     @media (max-width: 768px) {
-      .sidebar {
-        left: -220px;
-      }
-      .sidebar.active {
-        left: 0;
-      }
-      .content {
-        margin-left: 0;
-      }
-      .content.expanded {
-        margin-left: 0;
-      }
+      .sidebar { left: -220px; }
+      .sidebar.active { left: 0; }
+      .content { margin-left: 0; }
+      .content.expanded { margin-left: 0; }
     }
   </style>
 </head>
@@ -139,26 +75,37 @@
     </div>
   </nav>
 
-  Sidebar
+  <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <a href="{{route ('dashboard')}}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-      <i class="bi bi-house"></i> <span class="menu-text">Dashboard</span>
-    </a>
-    <a href="#" class="{{ request()->routeIs('aspirasi.create') ? 'active' : '' }}">
-      <i class="bi bi-plus-square"></i> <span class="menu-text">Tambah Aspirasi</span>
-    </a>
-    <a href="#" class="{{ request()->routeIs('aspirasi.index') ? 'active' : '' }}">
-      <i class="bi bi-list-task"></i> <span class="menu-text">Daftar Aspirasi</span>
-    </a>
-    <a href="{{route('kategori.index')}}" class="{{ request()->routeIs('kategori.*') ? 'active' : '' }}">
-      <i class="bi bi-tags"></i> <span class="menu-text">Daftar Kategori</span>
-    </a>
-    <a href="{{route ('masyarakat.index')}}" class="{{ request()->routeIs('masyarakat.*') ? 'active' : '' }}">
-      <i class="bi bi-people"></i> <span class="menu-text">Daftar Masyarakat</span>
-    </a>
-    <a href="{{route('anggotadprd.index')}}" class="{{ request()->routeIs('dewan.*') ? 'active' : '' }}">
-      <i class="bi bi-person-badge"></i> <span class="menu-text">Daftar Anggota</span>
-    </a>
+    @if(Auth::user()->role === 'admin')
+      <!-- Menu untuk Admin -->
+      <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <i class="bi bi-house"></i> <span class="menu-text">Dashboard</span>
+      </a>
+      <a href="{{ route('admin.aspirasi.index') }}" class="{{ request()->routeIs('admin.aspirasi.*') ? 'active' : '' }}">
+        <i class="bi bi-list-task"></i> <span class="menu-text">Daftar Aspirasi</span>
+      </a>
+      <a href="{{ route('kategori.index') }}" class="{{ request()->routeIs('admin.kategori.*') ? 'active' : '' }}">
+        <i class="bi bi-tags"></i> <span class="menu-text">Daftar Kategori</span>
+      </a>
+      <a href="{{ route('masyarakat.index') }}" class="{{ request()->routeIs('admin.masyarakat.*') ? 'active' : '' }}">
+        <i class="bi bi-people"></i> <span class="menu-text">Daftar Masyarakat</span>
+      </a>
+      <a href="{{ route('anggotadprd.index') }}" class="{{ request()->routeIs('admin.anggotadprd.*') ? 'active' : '' }}">
+        <i class="bi bi-person-badge"></i> <span class="menu-text">Daftar Anggota</span>
+      </a>
+    @else
+      <!-- Menu untuk Masyarakat -->
+      <a href="#" class="{{ request()->routeIs('masyarakat.dashboard') ? 'active' : '' }}">
+        <i class="bi bi-house"></i> <span class="menu-text">Dashboard</span>
+      </a>
+      <a href="{{ route('masyarakat.aspirasi.create') }}" class="{{ request()->routeIs('masyarakat.aspirasi.create') ? 'active' : '' }}">
+        <i class="bi bi-plus-square"></i> <span class="menu-text">Tambah Aspirasi</span>
+      </a>
+      <a href="{{ route('masyarakat.aspirasi.index') }}" class="{{ request()->routeIs('masyarakat.aspirasi.index') ? 'active' : '' }}">
+        <i class="bi bi-list-task"></i> <span class="menu-text">Daftar Aspirasi</span>
+      </a>
+    @endif
   </div>
 
   <!-- Content -->
@@ -173,9 +120,9 @@
 
     btnToggle.addEventListener("click", function() {
       if (window.innerWidth <= 768) {
-        sidebar.classList.toggle("active"); // mobile
+        sidebar.classList.toggle("active");
       } else {
-        sidebar.classList.toggle("collapsed"); // desktop
+        sidebar.classList.toggle("collapsed");
         content.classList.toggle("expanded");
       }
     });

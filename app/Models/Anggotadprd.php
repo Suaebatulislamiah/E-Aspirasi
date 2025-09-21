@@ -13,6 +13,6 @@ class Anggotadprd extends Model
 
     public function aspirasis()
     {
-        return $this->hasMany(Aspirasi::class, 'anggotadprd_id');
+        return $this->hasMany(Aspirasi::class, 'anggotadprd');
     }
 }

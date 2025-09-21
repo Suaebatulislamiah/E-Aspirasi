@@ -10,24 +10,25 @@ class Aspirasi extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'nama',
         'nik',
         'phone',
         'judul',
         'kategori_id',
         'anggotadprd_id',
+        'isi',
+        'tanggal',
         'kecamatan_id',
         'desa_id',
-        'isi',
         'lampiran',
-        'tanggal',
         'status',
         'tanggapan',
     ];
 
     public function kategori()
     {
-        return $this->belongsTo(Kategori::class, 'kategori_id');
+        return $this->belongsTo(Kategori::class);
     }
 
     public function anggotadprd()
@@ -37,11 +38,11 @@ class Aspirasi extends Model
 
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+        return $this->belongsTo(Kecamatan::class);
     }
 
     public function desa()
     {
-        return $this->belongsTo(Desa::class, 'desa_id');
+        return $this->belongsTo(Desa::class);
     }
 }

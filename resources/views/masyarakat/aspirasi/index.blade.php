@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container">
-    <h2>Daftar Aspirasi</h2>
+    <h2>Daftar Aspirasi Saya</h2>
+   <a href="{{ route('masyarakat.aspirasi.create') }}" class="btn btn-primary mb-3">
+    Tambah Aspirasi
+</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -18,13 +21,10 @@
                 <th>Judul Laporan</th>
                 <th>Jenis Laporan</th>
                 <th>Anggota DPRD</th>
-                <th>Jabatan</th>
-                <th>Komisi</th>
                 <th>Alamat</th>
-                <th>Isi Aspirasi</th>
                 <th>Lampiran</th>
                 <th>Status</th>
-                <th>Aksi</th>
+                <th>Tanggapan</th>
             </tr>
         </thead>
         <tbody>
@@ -37,13 +37,10 @@
                     <td>{{ $aspirasi->judul }}</td>
                     <td>{{ $aspirasi->kategori->nama_kategori ?? '-' }}</td>
                     <td>{{ $aspirasi->anggotadprd->nama ?? '-' }}</td>
-                    <td>{{ $aspirasi->anggotadprd->jabatan ?? '-' }}</td>
-                    <td>{{ $aspirasi->anggotadprd->komisi ?? '-' }}</td>
                     <td>
                         {{ $aspirasi->desa->nama_desa ?? '' }},
                         {{ $aspirasi->kecamatan->nama_kecamatan ?? '' }}
                     </td>
-                    <td>{{ \Illuminate\Support\Str::limit($aspirasi->isi, 50) }}</td>
                     <td>
                         @if($aspirasi->lampiran)
                             <a href="{{ asset('storage/'.$aspirasi->lampiran) }}" target="_blank">Lihat</a>
@@ -52,28 +49,21 @@
                         @endif
                     </td>
                     <td>
-                        <span class="badge 
-                            @if($aspirasi->status == 'baru') bg-secondary
-                            @elseif($aspirasi->status == 'terkirim') bg-info
-                            @elseif($aspirasi->status == 'ditanggapi') bg-warning
-                            @else bg-success
-                            @endif">
+                        <span class="badge bg-{{ $aspirasi->status == 'ditanggapi' ? 'success' : 'secondary' }}">
                             {{ ucfirst($aspirasi->status) }}
                         </span>
                     </td>
-                    <td class="d-flex flex-wrap gap-1">
-                        <a href="{{ route('admin.aspirasi.show', $aspirasi->id) }}" class="btn btn-info btn-sm">Detail</a>
-                        <a href="{{ route('admin.aspirasi.edit', $aspirasi->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.aspirasi.destroy', $aspirasi->id) }}" method="POST" onsubmit="return confirm('Yakin hapus aspirasi ini?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                        </form>
-                        <a href="{{ route('admin.aspirasi.show', $aspirasi->id) }}#tanggapan" class="btn btn-success btn-sm">Beri Tanggapan</a>
+                    <td>
+                        @if($aspirasi->tanggapan)
+                            <strong>{{ $aspirasi->tanggapan }}</strong>
+                        @else
+                            -
+                        @endif
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="14" class="text-center">Belum ada aspirasi</td>
+                    <td colspan="11" class="text-center">Belum ada aspirasi</td>
                 </tr>
             @endforelse
         </tbody>
