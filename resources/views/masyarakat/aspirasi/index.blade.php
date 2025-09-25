@@ -3,9 +3,6 @@
 @section('content')
 <div class="container">
     <h2>Daftar Aspirasi Saya</h2>
-   <a href="{{ route('masyarakat.aspirasi.create') }}" class="btn btn-primary mb-3">
-    Tambah Aspirasi
-</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -25,6 +22,7 @@
                 <th>Lampiran</th>
                 <th>Status</th>
                 <th>Tanggapan</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -37,34 +35,29 @@
                     <td>{{ $aspirasi->judul }}</td>
                     <td>{{ $aspirasi->kategori->nama_kategori ?? '-' }}</td>
                     <td>{{ $aspirasi->anggotadprd->nama ?? '-' }}</td>
-                    <td>
-                        {{ $aspirasi->desa->nama_desa ?? '' }},
-                        {{ $aspirasi->kecamatan->nama_kecamatan ?? '' }}
-                    </td>
+                    <td>{{ $aspirasi->desa->nama_desa ?? '' }}, {{ $aspirasi->kecamatan->nama_kecamatan ?? '' }}</td>
                     <td>
                         @if($aspirasi->lampiran)
                             <a href="{{ asset('storage/'.$aspirasi->lampiran) }}" target="_blank">Lihat</a>
-                        @else
-                            -
-                        @endif
+                        @else - @endif
                     </td>
                     <td>
                         <span class="badge bg-{{ $aspirasi->status == 'ditanggapi' ? 'success' : 'secondary' }}">
                             {{ ucfirst($aspirasi->status) }}
                         </span>
                     </td>
+                    <td>{{ $aspirasi->tanggapan ?? '-' }}</td>
                     <td>
-                        @if($aspirasi->tanggapan)
-                            <strong>{{ $aspirasi->tanggapan }}</strong>
-                        @else
-                            -
-                        @endif
+                        <a href="{{ route('masyarakat.aspirasi.show', $aspirasi->id) }}" class="btn btn-info btn-sm">Detail</a>
+                        <a href="{{ route('masyarakat.aspirasi.edit', $aspirasi->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('aspirasi.destroy', $aspirasi->id) }}" method="POST" style="display:inline;">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus aspirasi?')">Hapus</button>
+                        </form>
                     </td>
                 </tr>
             @empty
-                <tr>
-                    <td colspan="11" class="text-center">Belum ada aspirasi</td>
-                </tr>
+                <tr><td colspan="12" class="text-center">Belum ada aspirasi</td></tr>
             @endforelse
         </tbody>
     </table>

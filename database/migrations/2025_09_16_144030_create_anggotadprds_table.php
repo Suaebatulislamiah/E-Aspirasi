@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('anggotadprds', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->enum('jabatan', ['Ketua', 'Wakil Ketua', 'Anggota']);
-            $table->enum('komisi', ['Komisi I', 'Komisi II', 'Komisi III', 'Komisi IV', 'Komisi V']);
+            $table->enum('jabatan', ['Ketua DPRD', 'Wakil Ketua I', 'Wakil Ketua II', 'Wakil Ketua III', 'Anggota DPRD']);
+            $table->enum('komisi', ['Komisi I', 'Komisi II', 'Komisi III', 'Komisi IV']);
             $table->timestamps();
         });
     }

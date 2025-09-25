@@ -12,8 +12,10 @@
         <div class="mb-3">
             <label>Jabatan</label>
             <select name="jabatan" class="form-control" required>
-                <option value="Ketua" {{ $anggotadprd->jabatan == 'Ketua' ? 'selected' : '' }}>Ketua</option>
-                <option value="Wakil Ketua" {{ $anggotadprd->jabatan == 'Wakil Ketua' ? 'selected' : '' }}>Wakil Ketua</option>
+                <option value="Ketua DPRD" {{ $anggotadprd->jabatan == 'Ketua DPRD' ? 'selected' : '' }}>Ketua DPRD</option>
+                <option value="Wakil Ketua I" {{ $anggotadprd->jabatan == 'Wakil Ketua I' ? 'selected' : '' }}>Wakil Ketua I</option>
+                <option value="Wakil Ketua II" {{ $anggotadprd->jabatan == 'Wakil Ketua II' ? 'selected' : '' }}>Wakil Ketua II</option>
+                <option value="Wakil Ketua III" {{ $anggotadprd->jabatan == 'Wakil Ketua III' ? 'selected' : '' }}>Wakil Ketua III</option>
                 <option value="Anggota" {{ $anggotadprd->jabatan == 'Anggota' ? 'selected' : '' }}>Anggota</option>
             </select>
         </div>
@@ -24,7 +26,6 @@
                 <option value="Komisi II" {{ $anggotadprd->komisi == 'Komisi II' ? 'selected' : '' }}>Komisi II</option>
                 <option value="Komisi III" {{ $anggotadprd->komisi == 'Komisi III' ? 'selected' : '' }}>Komisi III</option>
                 <option value="Komisi IV" {{ $anggotadprd->komisi == 'Komisi IV' ? 'selected' : '' }}>Komisi IV</option>
-                <option value="Komisi V" {{ $anggotadprd->komisi == 'Komisi V' ? 'selected' : '' }}>Komisi V</option>
             </select>
         </div>
         <button class="btn btn-primary">Update</button>

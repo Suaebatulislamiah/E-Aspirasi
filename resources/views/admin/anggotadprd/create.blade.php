@@ -13,8 +13,10 @@
             <label>Jabatan</label>
             <select name="jabatan" class="form-control" required>
                 <option value="">-- Pilih Jabatan --</option>
-                <option value="Ketua">Ketua</option>
-                <option value="Wakil Ketua">Wakil Ketua</option>
+                <option value="Ketua DPRD">Ketua DPRD</option>
+                <option value="Wakil Ketua I">Wakil Ketua I</option>
+                <option value="Wakil Ketua II">Wakil Ketua II</option>
+                <option value="Wakil Ketua III">Wakil Ketua III</option>
                 <option value="Anggota">Anggota</option>
             </select>
         </div>

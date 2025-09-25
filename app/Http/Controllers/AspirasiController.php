@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Desa;
 use App\Models\Aspirasi;
 use App\Models\Kategori;
-use App\Models\Kecamatan;
 use App\Models\Anggotadprd;
+use App\Models\Kecamatan;
+use App\Models\Desa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +27,7 @@ class AspirasiController extends Controller
         return view('admin.aspirasi.index', compact('aspirasis'));
     }
 
-    // 🔹 Form create admin
+    // 🔹 Form create Admin
     public function createAdmin()
     {
         $kategoris = Kategori::all();
@@ -57,16 +57,16 @@ class AspirasiController extends Controller
     public function update(Request $request, Aspirasi $aspirasi)
     {
         $request->validate([
-            'nama'          => 'required|string|max:255',
-            'nik'           => 'required|string|max:20',
-            'phone'         => 'nullable|string|max:20',
-            'judul'         => 'required|string|max:255',
-            'kategori_id'   => 'required|exists:kategoris,id',
-            'anggotadprd_id'=> 'required|exists:anggotadprds,id',
-            'isi'           => 'required|string',
-            'kecamatan_id'  => 'required|exists:kecamatans,id',
-            'desa_id'       => 'required|exists:desas,id',
-            'lampiran'      => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'nama'           => 'required|string|max:255',
+            'nik'            => 'required|string|max:20',
+            'phone'          => 'nullable|string|max:20',
+            'judul'          => 'required|string|max:255',
+            'kategori_id'    => 'required|exists:kategoris,id',
+            'anggotadprd_id' => 'required|exists:anggotadprds,id',
+            'isi'            => 'required|string',
+            'kecamatan_id'   => 'required|exists:kecamatans,id',
+            'desa_id'        => 'required|exists:desas,id',
+            'lampiran'       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $data = $request->all();
@@ -127,7 +127,7 @@ class AspirasiController extends Controller
         return view('masyarakat.aspirasi.index', compact('aspirasis'));
     }
 
-    // 🔹 Form create masyarakat
+    // 🔹 Form create Masyarakat
     public function createMasyarakat()
     {
         $kategoris = Kategori::all();
@@ -137,25 +137,25 @@ class AspirasiController extends Controller
         return view('masyarakat.aspirasi.create', compact('kategoris', 'anggotadprds', 'kecamatans'));
     }
 
-    // 🔹 Store aspirasi masyarakat
+    // 🔹 Store aspirasi (Masyarakat & Admin sama-sama bisa pakai)
     public function store(Request $request)
     {
         $request->validate([
-            'nama'          => 'required|string|max:255',
-            'nik'           => 'required|string|max:20',
-            'phone'         => 'nullable|string|max:20',
-            'judul'         => 'required|string|max:255',
-            'kategori_id'   => 'required|exists:kategoris,id',
-            'anggotadprd_id'=> 'required|exists:anggotadprds,id',
-            'isi'           => 'required|string',
-            'kecamatan_id'  => 'required|exists:kecamatans,id',
-            'desa_id'       => 'required|exists:desas,id',
-            'lampiran'      => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'nama'           => 'required|string|max:255',
+            'nik'            => 'required|string|max:20',
+            'phone'          => 'nullable|string|max:20',
+            'judul'          => 'required|string|max:255',
+            'kategori_id'    => 'required|exists:kategoris,id',
+            'anggotadprd_id' => 'required|exists:anggotadprds,id',
+            'isi'            => 'required|string',
+            'kecamatan_id'   => 'required|exists:kecamatans,id',
+            'desa_id'        => 'required|exists:desas,id',
+            'lampiran'       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $data = $request->all();
         $data['tanggal'] = now();
-        $data['status'] = 'baru';
+        $data['status']  = 'baru';
         $data['user_id'] = Auth::id();
 
         if ($request->hasFile('lampiran')) {
@@ -166,12 +166,12 @@ class AspirasiController extends Controller
 
         if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.aspirasi.index')->with('success', 'Aspirasi berhasil dikirim.');
-        } else {
-            return redirect()->route('masyarakat.aspirasi.index')->with('success', 'Aspirasi berhasil dikirim.');
         }
+
+        return redirect()->route('masyarakat.aspirasi.index')->with('success', 'Aspirasi berhasil dikirim.');
     }
 
-    // 🔹 Show detail aspirasi masyarakat
+    // 🔹 Show detail aspirasi Masyarakat
     public function showMasyarakat(Aspirasi $aspirasi)
     {
         if ($aspirasi->user_id !== Auth::id()) {
@@ -181,7 +181,7 @@ class AspirasiController extends Controller
         return view('masyarakat.aspirasi.show', compact('aspirasi'));
     }
 
-    // 🔹 Edit aspirasi masyarakat
+    // 🔹 Edit aspirasi Masyarakat
     public function editMasyarakat(Aspirasi $aspirasi)
     {
         if ($aspirasi->user_id !== Auth::id()) {
@@ -195,7 +195,7 @@ class AspirasiController extends Controller
         return view('masyarakat.aspirasi.edit', compact('aspirasi', 'kategoris', 'anggotadprds', 'kecamatans'));
     }
 
-    // 🔹 Update aspirasi masyarakat
+    // 🔹 Update aspirasi Masyarakat
     public function updateMasyarakat(Request $request, Aspirasi $aspirasi)
     {
         if ($aspirasi->user_id !== Auth::id()) {
@@ -203,16 +203,16 @@ class AspirasiController extends Controller
         }
 
         $request->validate([
-            'nama'          => 'required|string|max:255',
-            'nik'           => 'required|string|max:20',
-            'phone'         => 'nullable|string|max:20',
-            'judul'         => 'required|string|max:255',
-            'kategori_id'   => 'required|exists:kategoris,id',
-            'anggotadprd_id'=> 'required|exists:anggotadprds,id',
-            'isi'           => 'required|string',
-            'kecamatan_id'  => 'required|exists:kecamatans,id',
-            'desa_id'       => 'required|exists:desas,id',
-            'lampiran'      => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'nama'           => 'required|string|max:255',
+            'nik'            => 'required|string|max:20|unique:aspirasis,nik,' . $aspirasi->id,
+            'phone'          => 'nullable|string|max:20',
+            'judul'          => 'required|string|max:255',
+            'kategori_id'    => 'required|exists:kategoris,id',
+            'anggotadprd_id' => 'required|exists:anggotadprds,id',
+            'isi'            => 'required|string',
+            'kecamatan_id'   => 'required|exists:kecamatans,id',
+            'desa_id'        => 'required|exists:desas,id',
+            'lampiran'       => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         $data = $request->all();
@@ -230,7 +230,7 @@ class AspirasiController extends Controller
                          ->with('success', 'Aspirasi berhasil diperbarui.');
     }
 
-    // 🔹 Hapus aspirasi masyarakat
+    // 🔹 Hapus aspirasi Masyarakat
     public function destroyMasyarakat(Aspirasi $aspirasi)
     {
         if ($aspirasi->user_id !== Auth::id()) {
@@ -245,5 +245,18 @@ class AspirasiController extends Controller
 
         return redirect()->route('masyarakat.aspirasi.index')
                          ->with('success', 'Aspirasi berhasil dihapus.');
+    }
+
+    // ============================
+    // COMMON
+    // ============================
+
+    // 🔹 Route resource bawaan diarahkan otomatis sesuai role
+    public function create()
+    {
+        if (Auth::user()->role === 'admin') {
+            return $this->createAdmin();
+        }
+        return $this->createMasyarakat();
     }
 }

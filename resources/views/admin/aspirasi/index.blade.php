@@ -46,7 +46,7 @@
                     <td>{{ \Illuminate\Support\Str::limit($aspirasi->isi, 50) }}</td>
                     <td>
                         @if($aspirasi->lampiran)
-                            <a href="{{ asset('storage/'.$aspirasi->lampiran) }}" target="_blank">Lihat</a>
+                            <img src="{{ asset('storage/'.$aspirasi->lampiran) }}" alt="Lampiran" style="max-width: 100px; max-height: 100px; object-fit: contain;">
                         @else
                             -
                         @endif
@@ -63,7 +63,6 @@
                     </td>
                     <td class="d-flex flex-wrap gap-1">
                         <a href="{{ route('admin.aspirasi.show', $aspirasi->id) }}" class="btn btn-info btn-sm">Detail</a>
-                        <a href="{{ route('admin.aspirasi.edit', $aspirasi->id) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('admin.aspirasi.destroy', $aspirasi->id) }}" method="POST" onsubmit="return confirm('Yakin hapus aspirasi ini?')">
                             @csrf @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>

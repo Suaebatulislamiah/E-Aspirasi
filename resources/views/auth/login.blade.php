@@ -92,7 +92,7 @@
   <div>
     <!-- Logo -->
     <div class="logo">
-      <img src="img/DPRD_Loteng.png" alt="Logo"> <!-- Ganti dengan path logo Anda -->
+      <img src="{{ asset('asset/img/dprd_Loteng.png') }}" alt="Logo">
     </div>
 
     <!-- Kotak Login -->

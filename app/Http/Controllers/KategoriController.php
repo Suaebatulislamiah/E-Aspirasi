@@ -15,7 +15,7 @@ class KategoriController extends Controller
 
     public function create()
     {
-        return view('admin.kategori.create');
+        return view('kategori.create');
     }
 
     public function store(Request $request)
@@ -26,7 +26,7 @@ class KategoriController extends Controller
 
         Kategori::create($request->all());
 
-        return redirect()->route('admin.kategori.index')
+        return redirect()->route('kategori.index')
                          ->with('success', 'Kategori berhasil ditambahkan.');
     }
 
@@ -43,7 +43,7 @@ class KategoriController extends Controller
 
         $kategori->update($request->all());
 
-        return redirect()->route('admin.kategori.index')
+        return redirect()->route('kategori.index')
                          ->with('success', 'Kategori berhasil diperbarui.');
     }
 
@@ -51,7 +51,7 @@ class KategoriController extends Controller
     {
         $kategori->delete();
 
-        return redirect()->route('admin.kategori.index')
+        return redirect()->route('kategori.index')
                          ->with('success', 'Kategori berhasil dihapus.');
     }
 }

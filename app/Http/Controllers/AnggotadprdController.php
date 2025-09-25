@@ -21,14 +21,15 @@ class AnggotadprdController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'jabatan' => 'required|in:Ketua,Wakil Ketua,Anggota',
-            'komisi' => 'required|in:Komisi I,Komisi II,Komisi III,Komisi IV,Komisi V',
+            'nama'    => 'required|string|max:255',
+            'jabatan' => 'required|in:Ketua DPRD,Wakil Ketua I,Wakil Ketua II,Wakil Ketua III,Anggota',
+            'komisi'  => 'required|in:Komisi I,Komisi II,Komisi III,Komisi IV',
         ]);
 
-        Anggotadprd::create($request->all());
+        Anggotadprd::create($request->only(['nama', 'jabatan', 'komisi']));
 
-        return redirect()->route('anggotadprd.index')->with('success', 'Anggota DPRD berhasil ditambahkan.');
+        return redirect()->route('anggotadprd.index')
+                         ->with('success', 'Anggota DPRD berhasil ditambahkan.');
     }
 
     public function edit(Anggotadprd $anggotadprd)
@@ -39,19 +40,22 @@ class AnggotadprdController extends Controller
     public function update(Request $request, Anggotadprd $anggotadprd)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'jabatan' => 'required|in:Ketua,Wakil Ketua,Anggota',
-            'komisi' => 'required|in:Komisi I,Komisi II,Komisi III,Komisi IV,Komisi V',
+            'nama'    => 'required|string|max:255',
+            'jabatan' => 'required|in:Ketua DPRD,Wakil Ketua I,Wakil Ketua II,Wakil Ketua III,Anggota',
+            'komisi'  => 'required|in:Komisi I,Komisi II,Komisi III,Komisi IV',
         ]);
 
-        $anggotadprd->update($request->all());
+        $anggotadprd->update($request->only(['nama', 'jabatan', 'komisi']));
 
-        return redirect()->route('anggotadprd.index')->with('success', 'Anggota DPRD berhasil diperbarui.');
+        return redirect()->route('anggotadprd.index')
+                         ->with('success', 'Anggota DPRD berhasil diperbarui.');
     }
 
     public function destroy(Anggotadprd $anggotadprd)
     {
         $anggotadprd->delete();
-        return redirect()->route('anggotadprd.index')->with('success', 'Anggota DPRD berhasil dihapus.');
+
+        return redirect()->route('anggotadprd.index')
+                         ->with('success', 'Anggota DPRD berhasil dihapus.');
     }
 }
